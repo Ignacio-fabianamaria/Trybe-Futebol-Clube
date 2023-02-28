@@ -54,8 +54,8 @@ describe('Testes para rota /teams', () => {
   it('Verifica se a rota GET/teams retorna uma lista com todos os times', async() => {
  
     chaiHttpRes = await chai.request(app).get('/teams');
-    expect(chaiHttpRes.status).to.be.equal(404);
-    expect(chaiHttpRes.body).to.be.deep.equal;
+    expect(chaiHttpRes.status).to.be.equal(200);
+    expect(chaiHttpRes.body).to.be.deep.equal(teamsList);
     
   });
 });

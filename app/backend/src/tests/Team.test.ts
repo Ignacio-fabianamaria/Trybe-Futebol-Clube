@@ -16,7 +16,7 @@ const { expect } = chai;
 
 describe('Testes para rota /teams', () => {
   
-   // ---Exemplo do uso de stubs com tipos---
+   // Exemplo do uso de stubs com tipos
    
  let chaiHttpRes: Response;
  const teamsList = [

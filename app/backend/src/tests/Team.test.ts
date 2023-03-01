@@ -15,10 +15,9 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Testes para rota /teams', () => {
-  
-   // Exemplo do uso de stubs com tipos
-   
+    
  let chaiHttpRes: Response;
+
  const teamsList = [
   {
     "id": 1,
@@ -56,6 +55,14 @@ describe('Testes para rota /teams', () => {
     chaiHttpRes = await chai.request(app).get('/teams');
     expect(chaiHttpRes.status).to.be.equal(200);
     expect(chaiHttpRes.body).to.be.deep.equal(teamsList);
+    
+  });
+  it('Verifica se a rota GET/teams/:id retorna dados de um time específico', async() => {
+ 
+    // Sinon.stub(Model, 'findOne').resolves(teamsList);
+    chaiHttpRes = await chai.request(app).get('/teams/1').send();
+    expect(chaiHttpRes.status).to.be.equal(200);
+    
     
   });
 });

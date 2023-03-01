@@ -1,3 +1,3 @@
-export default class validateLogin {
+/* export default class validateLogin {
 
-}
+} */

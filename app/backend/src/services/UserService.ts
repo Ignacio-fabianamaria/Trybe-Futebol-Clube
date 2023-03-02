@@ -6,8 +6,6 @@ import ILogin from '../interfaces/ILogin';
 import IToken from '../interfaces/IToken';
 import { generateToken } from '../utils/jwt';
 
-const ERROR_LOGIN = 'All fields must be filled';
-
 export default class UserServise implements IServiceUser {
   protected model: ModelStatic<UserModel> = UserModel;
 
@@ -15,13 +13,12 @@ export default class UserServise implements IServiceUser {
     const { email, password } = body;
 
     const isUser = await this.model.findOne({ where: { email } });
-    if (!isUser) throw new Error(ERROR_LOGIN);
+    if (!isUser) return null;
 
     const validPassword = bcrypt.compareSync(password, isUser?.password);
     if (!validPassword) return null;
 
-    const token = generateToken({ id: isUser.id });
-    console.log({ token });
+    const token = generateToken({ id: isUser.id, role: isUser.role });
     return { token };
   }
 }

@@ -10,10 +10,10 @@ export default class UserControler {
 
   async toLogin(req:Request, res:Response) {
     const { email, password } = req.body;
+
     const isUser = await this._service.toLogin({ email, password });
-    if (!isUser) {
-      return res.status(400).json({ message: 'All fields must be filled' });
-    }
+    console.log({ isUser });
+
     return res.status(200).json(isUser);
   }
 }

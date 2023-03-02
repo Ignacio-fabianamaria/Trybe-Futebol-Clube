@@ -1,4 +1,4 @@
-import { sign, SignOptions } from 'jsonwebtoken';
+import { sign, SignOptions, verify } from 'jsonwebtoken';
 import 'dotenv/config';
 // import ILogin from '../interfaces/ILogin';
 
@@ -12,4 +12,11 @@ const jwtConfig: SignOptions = {
 export const generateToken = (payload:string | object) =>
   sign(payload, JWT_SECRET, jwtConfig);
 
-export default generateToken;
+export const tokenVerify = (token:string) => {
+  try {
+    const verifyJwt = verify(token, JWT_SECRET);
+    return verifyJwt;
+  } catch (error) {
+    console.log(error);
+  }
+};

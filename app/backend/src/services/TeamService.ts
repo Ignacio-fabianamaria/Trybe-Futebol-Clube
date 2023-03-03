@@ -1,4 +1,3 @@
-// import { ModelStatic } from 'sequelize';
 import { ModelStatic } from 'sequelize';
 import IServiceTeam from '../interfaces/IServiceTeam';
 import TeamModel from '../database/models/TeamModel';

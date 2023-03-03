@@ -3,8 +3,7 @@ import UserServise from '../services/UserService';
 import UserController from '../controllers/UserControler';
 import validateLogin from '../middlewares/validateLogin';
 import validateEmailPassword from '../middlewares/validateEmailPassword';
-
-// import validateToken from '../middlewares/validateToken';
+import validateToken from '../middlewares/validateToken';
 
 const usersRoutes = Router();
 const userService = new UserServise();
@@ -17,10 +16,10 @@ usersRoutes.post(
   (req:Request, res:Response) => userController.toLogin(req, res),
 );
 
-/* usersRoutes.get(
+usersRoutes.get(
   '/login/role',
   validateToken,
-  (req:Request, res:Response) => UserController.getLogin(req, res),
-); */
+  (req:Request, res:Response) => res.status(200).json({ role: res.locals.user.role }),
+);
 
 export default usersRoutes;

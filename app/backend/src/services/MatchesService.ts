@@ -13,7 +13,17 @@ export default class MatchesService implements IServiceMatches {
         { model: TeamModel, as: 'awayTeam', attributes: ['teamName'] },
       ],
     });
-
     return matches;
+  }
+
+  async filterMacthes(query:boolean): Promise<MatchesModel[]> {
+    const matchesFilter = await this.model.findAll({
+      where: { inProgress: query },
+      include: [
+        { model: TeamModel, as: 'homeTeam', attributes: ['teamName'] },
+        { model: TeamModel, as: 'awayTeam', attributes: ['teamName'] },
+      ],
+    });
+    return matchesFilter;
   }
 }

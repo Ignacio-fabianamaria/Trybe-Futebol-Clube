@@ -12,8 +12,6 @@ export default class UserControler {
     const { email, password } = req.body;
 
     const isUser = await this._service.toLogin({ email, password });
-    console.log({ isUser });
-
     return res.status(200).json(isUser);
   }
 }

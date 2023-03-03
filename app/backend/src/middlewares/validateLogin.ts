@@ -1,21 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
+import UserServise from '../services/UserService';
 
-const ERROR_LOGIN = 'All fields must be filled';
 const INVALID_LOGIN = 'Invalid email or password';
-const REGEX_EMAIL = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
 
-export default function validateLogin(req:Request, res:Response, next:NextFunction):void {
+export default async function validateLogin(req: Request, res: Response, next: NextFunction) {
   const { email, password } = req.body;
+  const userService = new UserServise();
+  const isUser = await userService.toLogin({ email, password });
 
-  if (!email || !password) {
-    res.status(400).json({ message: ERROR_LOGIN });
-    return;
-  }
-  if (!REGEX_EMAIL.test(email)) {
-    res.status(401).json({ message: INVALID_LOGIN });
-    return;
-  }
-  if (password.length < 6) {
+  if (!isUser) {
     res.status(401).json({ message: INVALID_LOGIN });
     return;
   }

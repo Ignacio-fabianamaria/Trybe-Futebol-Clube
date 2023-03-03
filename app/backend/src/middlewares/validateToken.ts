@@ -16,6 +16,5 @@ export default function validateToken(req:Request, res:Response, next:NextFuncti
     res.status(401).json({ message: TOKEN_INVALID });
     return;
   }
-
   next();
 }

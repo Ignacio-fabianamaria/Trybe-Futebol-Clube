@@ -1,8 +1,7 @@
 import { sign, SignOptions, verify } from 'jsonwebtoken';
 import 'dotenv/config';
-// import ILogin from '../interfaces/ILogin';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'suaSenhasecreta';
 
 const jwtConfig: SignOptions = {
   expiresIn: '1d',

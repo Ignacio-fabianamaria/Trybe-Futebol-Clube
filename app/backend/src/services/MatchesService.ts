@@ -3,9 +3,22 @@ import TeamModel from '../database/models/TeamModel';
 import MatchesModel from '../database/models/MatchesModel';
 import IServiceMatches from '../interfaces/IServiceMatches';
 import IUpdateMatches from '../interfaces/IUpdateMatches';
+import IMatches from '../interfaces/IMatches';
 
 export default class MatchesService implements IServiceMatches {
   protected model: ModelStatic<MatchesModel> = MatchesModel;
+
+  async createNewMatch(body: IMatches): Promise<MatchesModel> {
+    const newMatch = await this.model.create(
+      { ...body, inProgress: true },
+    );
+    return newMatch;
+  }
+
+  async findById(id: string): Promise<MatchesModel | null> {
+    const findMatchById = await this.model.findByPk(id);
+    return findMatchById;
+  }
 
   async findAll(): Promise<MatchesModel[]> {
     const matches = await this.model.findAll({
@@ -32,7 +45,7 @@ export default class MatchesService implements IServiceMatches {
     const updated = await this.model.update(
       body,
       { where: { id } },
-    );
+    );// o retorno é [affectedCount: number]
     return updated;
   }
 

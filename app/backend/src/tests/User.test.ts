@@ -35,13 +35,23 @@ describe('Testes para rota /users', () => {
     expect(resNoPassword.status).to.be.deep.equal(400);
 
   });
-  it(`Verifica que não é possível efetuar login com um usuário inválido na rota GET/login.`, async () => {
+  it(`Verifica que não é possível efetuar login com um usuário inválido na rota POST/login.`, async () => {
     const usuer = {
       "email": "trybe@trybe.com",
       "password": "password1"
     }
     const user = await chai.request(app).post('/login').send(usuer);
     expect(user.status).to.be.deep.equal(401);
+
+  });
+
+  it(`Verifica que é possível efetuar login com um usuário válido na rota POST/login.`, async () => {
+    const usuer = {
+      "email": "user@user.com",
+      "password": "secret_user"
+    }
+    const user = await chai.request(app).post('/login').send(usuer);
+    expect(user.status).to.be.deep.equal(200);
 
   });
 

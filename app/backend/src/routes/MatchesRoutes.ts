@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+// import validateNewMatch from '../middlewares/validateNewMatch';
 import validateToken from '../middlewares/validateToken';
 import MatchesControler from '../controllers/MatchesController';
 import MatchesService from '../services/MatchesService';
@@ -10,6 +11,12 @@ const matchesController = new MatchesControler(matchesService);
 matchesRoutes.get(
   '/matches',
   (req:Request, res:Response) => matchesController.findAll(req, res),
+);
+
+matchesRoutes.post(
+  '/matches',
+  validateToken,
+  (req:Request, res:Response) => matchesController.createNewMatch(req, res),
 );
 
 matchesRoutes.patch(

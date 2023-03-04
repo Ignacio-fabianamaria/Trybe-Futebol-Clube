@@ -9,6 +9,19 @@ export default class MatchesControler {
     this._service = service;
   }
 
+  async findById(req:Request, res:Response) {
+    const { id } = req.params;
+    res.status(200).json(await this._service.findById(id));
+  }
+
+  async createNewMatch(req:Request, res:Response) {
+    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+    const newMatch = await this._service.createNewMatch(
+      { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals },
+    );
+    res.status(201).json(newMatch);
+  }
+
   async findAll(req:Request, res:Response) {
     const { inProgress } = req.query;
     const filterTrue = await this._service.filterMacthes(inProgress === 'true');

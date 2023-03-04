@@ -13,6 +13,12 @@ matchesRoutes.get(
 );
 
 matchesRoutes.patch(
+  '/matches/:id',
+  validateToken,
+  (req:Request, res:Response) => matchesController.updateMatches(req, res),
+);
+
+matchesRoutes.patch(
   '/matches/:id/finish',
   validateToken,
   (req:Request, res:Response) => matchesController.finishMatches(req, res),

@@ -26,4 +26,12 @@ export default class MatchesService implements IServiceMatches {
     });
     return matchesFilter;
   }
+
+  async finishMatches(id: string): Promise<[number]> {
+    const findById = await this.model.update(
+      { inProgress: false },
+      { where: { id } },
+    );// o retorno é [affectedCount: number]
+    return findById;
+  }
 }

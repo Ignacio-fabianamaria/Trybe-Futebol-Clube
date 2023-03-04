@@ -15,10 +15,6 @@ export default async function validateLogin(req: Request, res: Response, next: N
     res.status(401).json({ message: INVALID_LOGIN });
     return;
   }
-  /* if (!password) {
-    res.status(400).json({ message: ERROR_LOGIN });
-    return;
-  } */
   if (password.length < 6) {
     res.status(401).json({ message: INVALID_LOGIN });
     return;

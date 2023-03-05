@@ -15,8 +15,11 @@ export default class MatchesService implements IServiceMatches {
     return newMatch;
   }
 
-  async findById(id: string): Promise<MatchesModel | null> {
-    const findMatchById = await this.model.findByPk(id);
+  async findById(id:string): Promise<MatchesModel> {
+    const findMatchById = await this.model.findOne({ where: { id } });
+    if (!findMatchById) {
+      throw new Error('Id not found!');
+    }
     return findMatchById;
   }
 

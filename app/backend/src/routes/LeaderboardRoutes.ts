@@ -8,7 +8,6 @@ const leaderboardController = new LeaderboardController(leaderboardService);
 
 leaderboardRoutes.get(
   '/leaderboard/home',
-  (req:Request, res:Response) => leaderboardController.findAllHome(req, res),
+  (req:Request, res:Response) => leaderboardController.findAllTeams(req, res),
 );
-
 export default leaderboardRoutes;

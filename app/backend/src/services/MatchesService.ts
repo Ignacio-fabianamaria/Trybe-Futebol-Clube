@@ -10,16 +10,16 @@ export default class MatchesService implements IServiceMatches {
 
   async createNewMatch(body: IMatches): Promise<MatchesModel> {
     const newMatch = await this.model.create(
-      { ...body, inProgress: true },
+      {
+        ...body,
+        inProgress: true,
+      },
     );
     return newMatch;
   }
 
-  async findById(id:string): Promise<MatchesModel> {
-    const findMatchById = await this.model.findOne({ where: { id } });
-    if (!findMatchById) {
-      throw new Error('Id not found!');
-    }
+  async findById(id:string): Promise<MatchesModel | null> {
+    const findMatchById = await this.model.findByPk(id);
     return findMatchById;
   }
 

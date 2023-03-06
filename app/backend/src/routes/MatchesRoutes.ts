@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-// import validateNewMatch from '../middlewares/validateNewMatch';
+import validateNewMatch from '../middlewares/validateNewMatch';
 import validateToken from '../middlewares/validateToken';
 import MatchesControler from '../controllers/MatchesController';
 import MatchesService from '../services/MatchesService';
@@ -16,6 +16,7 @@ matchesRoutes.get(
 matchesRoutes.post(
   '/matches',
   validateToken,
+  validateNewMatch,
   (req:Request, res:Response) => matchesController.createNewMatch(req, res),
 );
 

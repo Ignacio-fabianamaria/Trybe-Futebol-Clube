@@ -11,13 +11,24 @@ export default class MatchesControler {
 
   async findById(req:Request, res:Response) {
     const { id } = req.params;
-    res.status(200).json(await this._service.findById(id));
+    res.status(200).json(await this._service.findById((id)));
   }
 
   async createNewMatch(req:Request, res:Response) {
-    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+    const {
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    } = req.body;
+
     const newMatch = await this._service.createNewMatch(
-      { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals },
+      {
+        homeTeamId,
+        awayTeamId,
+        homeTeamGoals,
+        awayTeamGoals,
+      },
     );
     res.status(201).json(newMatch);
   }
@@ -37,7 +48,13 @@ export default class MatchesControler {
   async updateMatches(req:Request, res:Response) {
     const { id } = req.params;
     const { homeTeamGoals, awayTeamGoals } = req.body;
-    await this._service.updateMatches(id, { homeTeamGoals, awayTeamGoals });
+    await this._service.updateMatches(
+      id,
+      {
+        homeTeamGoals,
+        awayTeamGoals,
+      },
+    );
     return res.status(200).json({ message: 'Updated' });
   }
 

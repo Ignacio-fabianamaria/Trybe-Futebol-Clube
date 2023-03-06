@@ -8,7 +8,7 @@ export default class LeaderboardController {
     this._service = service;
   }
 
-  async findAllTeams(req:Request, res:Response) {
-    res.status(200).json(await this._service.findAllTeams());
+  async getMatchAndTeamName(req:Request, res:Response) {
+    res.status(200).json(await this._service.getMatchAndTeamName());
   }
 }

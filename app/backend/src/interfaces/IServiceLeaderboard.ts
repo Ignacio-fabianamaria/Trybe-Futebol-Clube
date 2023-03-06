@@ -1,5 +1,7 @@
 import MatchesModel from '../database/models/MatchesModel';
+import ILeaderboard from './ILeaderboard';
 
 export default interface IServiceLeaderboard {
-  findAllTeams():Promise<MatchesModel[]>
+  getMatchAndTeamName():Promise<MatchesModel[]>
+  createLeaderboard():Promise<ILeaderboard[]>
 }

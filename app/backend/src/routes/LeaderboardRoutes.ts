@@ -8,6 +8,6 @@ const leaderboardController = new LeaderboardController(leaderboardService);
 
 leaderboardRoutes.get(
   '/leaderboard/home',
-  (req:Request, res:Response) => leaderboardController.getMatchAndTeamName(req, res),
+  (req:Request, res:Response) => leaderboardController.getLeaderbords(req, res),
 );
 export default leaderboardRoutes;

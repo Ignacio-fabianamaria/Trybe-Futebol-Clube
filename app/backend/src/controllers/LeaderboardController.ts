@@ -9,12 +9,10 @@ export default class LeaderboardController {
   }
 
   async getLeaderbords(req:Request, res:Response) {
-    // const type = (req.path).split('/')[2];
     res.status(200).json(await this._service.getLeaderboards());
   }
 
   async getLeaderbordsAway(req:Request, res:Response) {
-    // const type = (req.path).split('/')[2];
     res.status(200).json(await this._service.getLeaderboards());
   }
 }

@@ -15,7 +15,7 @@ export default class Leaderboard implements IServiceLeaderboard {
     const leaderbordAway = TEAMS.map((e) => ({
       name: e.teamName,
       totalPoints: Leaderboard.getAwayPoints(MATCHES, e.id),
-      totalGames: 0,
+      totalGames: Leaderboard.getAwayVictories(MATCHES, e.id),
       totalVictories: 0,
       totalDraws: 0,
       totalLosses: 0,
@@ -38,5 +38,10 @@ export default class Leaderboard implements IServiceLeaderboard {
       return awayPoints;
     });
     return awayPoints;
+  }
+
+  static getAwayVictories(findVictory:MatchesModel[], id:number) {
+    return findVictory.filter((e) => e.awayTeamId === id)
+      .filter((v) => v.homeTeamGoals < v.awayTeamGoals).length;
   }
 }

@@ -20,7 +20,7 @@ export default class Leaderboard implements IServiceLeaderboard {
       totalDraws: Leaderboard.getAwayTotalDraws(MATCHES, e.id),
       totalLosses: Leaderboard.getAwayTotalLosses(MATCHES, e.id),
       goalsFavor: Leaderboard.getAwayGoalsFavor(MATCHES, e.id),
-      goalsOwn: 0,
+      goalsOwn: Leaderboard.getAwayGoalsOwn(MATCHES, e.id),
       goalsBalance: 0,
       efficiency: 0,
     }));
@@ -76,4 +76,15 @@ export default class Leaderboard implements IServiceLeaderboard {
     return goalsFavor;
   }
 
+  static getAwayGoalsOwn(findGoals:MatchesModel[], id:number) {
+    let goalsOwn = 0;
+    findGoals.filter((e) => {
+      if (e.awayTeamId === id) {
+        goalsOwn += e.homeTeamGoals;
+      }
+      return goalsOwn;
+    });
+    return goalsOwn;
+  }
+  
 }

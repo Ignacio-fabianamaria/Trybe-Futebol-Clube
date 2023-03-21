@@ -9,12 +9,12 @@ export default class Leaderboard implements IServiceLeaderboard {
   protected modelMatch: ModelStatic<MatchesModel> = MatchesModel;
 
   async getLeaderboards(): Promise<ILeaderboard[]> {
-    // const MATCHES = await this.modelMatch.findAll({ where: { inProgress: false } });
+    const MATCHES = await this.modelMatch.findAll({ where: { inProgress: false } });
     const TEAMS = await this.modelTeam.findAll();
 
     const leaderbordAway = TEAMS.map((e) => ({
       name: e.teamName,
-      totalPoints: 0,
+      totalPoints: Leaderboard.getAwayPoints(MATCHES, e.id),
       totalGames: 0,
       totalVictories: 0,
       totalDraws: 0,
@@ -26,5 +26,17 @@ export default class Leaderboard implements IServiceLeaderboard {
     }));
 
     return leaderbordAway;
+  }
+
+  static getAwayPoints(findPoints:MatchesModel[], id:number) {
+    let awayPoints = 0;
+    findPoints.filter((e) => {
+      if (e.homeTeamId === id) {
+        if (e.homeTeamGoals < e.awayTeamGoals) { awayPoints += 3; }
+        if (e.homeTeamGoals === e.awayTeamGoals) { awayPoints += 1; }
+      }
+      return awayPoints;
+    });
+    return awayPoints;
   }
 }

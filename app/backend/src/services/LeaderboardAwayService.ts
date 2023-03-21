@@ -16,7 +16,7 @@ export default class Leaderboard implements IServiceLeaderboard {
       name: e.teamName,
       totalPoints: Leaderboard.getAwayPoints(MATCHES, e.id),
       totalGames: Leaderboard.getAwayVictories(MATCHES, e.id),
-      totalVictories: 0,
+      totalVictories: Leaderboard.getAwayTotalDraws(MATCHES, e.id),
       totalDraws: 0,
       totalLosses: 0,
       goalsFavor: 0,
@@ -43,5 +43,10 @@ export default class Leaderboard implements IServiceLeaderboard {
   static getAwayVictories(findVictory:MatchesModel[], id:number) {
     return findVictory.filter((e) => e.awayTeamId === id)
       .filter((v) => v.homeTeamGoals < v.awayTeamGoals).length;
+  }
+
+  static getAwayTotalDraws(findVictory:MatchesModel[], id:number) {
+    return findVictory.filter((e) => e.awayTeamId === id)
+      .filter((v) => v.homeTeamGoals === v.awayTeamGoals).length;
   }
 }

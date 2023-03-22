@@ -21,17 +21,17 @@ export default class Leaderboard implements IServiceLeaderboard {
       totalLosses: Leaderboard.getAwayTotalLosses(MATCHES, e.id),
       goalsFavor: Leaderboard.getAwayGoalsFavor(MATCHES, e.id),
       goalsOwn: Leaderboard.getAwayGoalsOwn(MATCHES, e.id),
-      goalsBalance: 0,
-      efficiency: 0,
+      goalsBalance: Leaderboard.getAwayGoalsBalance(MATCHES, e.id),
+      efficiency: Number(Leaderboard.getAwayEfficiency(MATCHES, e.id)),
     }));
-
-    return leaderbordAway;
+    const order = Leaderboard.getOrderAwayLeaderboard(leaderbordAway);
+    return order;
   }
 
   static getAwayPoints(findPoints:MatchesModel[], id:number) {
     let awayPoints = 0;
     findPoints.filter((e) => {
-      if (e.homeTeamId === id) {
+      if (e.awayTeamId === id) {
         if (e.homeTeamGoals < e.awayTeamGoals) { awayPoints += 3; }
         if (e.homeTeamGoals === e.awayTeamGoals) { awayPoints += 1; }
       }
@@ -57,11 +57,11 @@ export default class Leaderboard implements IServiceLeaderboard {
 
   static getAwayTotalGames(findVictory:MatchesModel[], id:number) {
     const vic = findVictory.filter((e) => e.awayTeamId === id)
-      .filter((v) => v.homeTeamGoals > v.awayTeamGoals).length;
-    const draws = findVictory.filter((e) => e.homeTeamId === id)
+      .filter((v) => v.awayTeamGoals > v.homeTeamGoals).length;
+    const draws = findVictory.filter((e) => e.awayTeamId === id)
       .filter((v) => v.homeTeamGoals === v.awayTeamGoals).length;
-    const losses = findVictory.filter((e) => e.homeTeamId === id)
-      .filter((v) => v.homeTeamGoals < v.awayTeamGoals).length;
+    const losses = findVictory.filter((e) => e.awayTeamId === id)
+      .filter((v) => v.awayTeamGoals < v.homeTeamGoals).length;
     return vic + draws + losses;
   }
 
@@ -86,5 +86,37 @@ export default class Leaderboard implements IServiceLeaderboard {
     });
     return goalsOwn;
   }
-  
+
+  static getAwayGoalsBalance(findGoals:MatchesModel[], id:number) {
+    let GP = 0;
+    let GC = 0;
+    findGoals.filter((e) => {
+      if (e.awayTeamId === id) {
+        GP += e.awayTeamGoals;
+        GC += e.homeTeamGoals;
+      }
+      return GP - GC;
+    });
+    return GP - GC;
+  }
+
+  static getAwayEfficiency(match:MatchesModel[], id:number) {
+    const totalPoints = Leaderboard.getAwayPoints(match, id);
+    const totalGames = (Leaderboard.getAwayTotalGames(match, id)) * 3;
+
+    const efficiency = ((totalPoints / totalGames) * 100).toFixed(2);
+    return efficiency;
+  }
+
+  static getOrderAwayLeaderboard(order:ILeaderboard[]) {
+    order.sort((a:ILeaderboard, b:ILeaderboard) => {
+      if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
+      if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
+      if (a.goalsBalance !== b.goalsBalance) return b.goalsBalance - a.goalsBalance;
+      if (a.goalsFavor !== b.goalsFavor) return b.goalsFavor - a.goalsFavor;
+      if (a.goalsOwn !== b.goalsOwn) return b.goalsOwn - a.goalsOwn;
+      return b.goalsOwn - a.goalsOwn;
+    });
+    return order;
+  }
 }

@@ -23,10 +23,10 @@ Entender  como se dá a integração entre front e back-end (com banco de dados)
  
  Esse projeto é composto de 4 fluxos principais:
 
-Teams (Times);
-Users e Login (Pessoas Usuárias e Credenciais de acesso);
-Matches (Partidas);
-Leaderboards (Placares);
+ * Teams (Times);
+ * Users e Login (Pessoas Usuárias e Credenciais de acesso);
+ * Matches (Partidas);
+ * Leaderboards (Placares);
  
  `Exemplo do retorno esperado do placar dos times`
  
